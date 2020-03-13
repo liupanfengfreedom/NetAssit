@@ -23,13 +23,14 @@ namespace NetAssisit
         UdpServer udpserver;
         Socket mclient_udp;
         IPEndPoint remoteEndPoint;
+        TcpSocketClient udpreive;
         public NetAssist()
         {
             InitializeComponent();
             mclient_udp = new Socket(AddressFamily.InterNetwork,
             SocketType.Dgram, ProtocolType.Udp);
             SynchronizationContext contex = SynchronizationContext.Current;
-            new TcpSocketClient(this, mclient_udp, contex, (X) => {
+            udpreive = new TcpSocketClient(this, mclient_udp, contex, (X) => {
                 listBox4.Items.Add(remoteEndPoint.ToString() + ": " + DateTime.Now.ToString());
                 listBox4.Items.Add(X as string);
             });
@@ -110,8 +111,8 @@ namespace NetAssisit
         {
             if (button4.Text == "Disconnect")
             {
-                mclient.abordthread();
-                mclient.msocket.Close();
+                mclient?.abordthread();
+                mclient?.msocket.Close();
                 button4.Text = "Connect";
                 return;
             }
@@ -250,6 +251,12 @@ namespace NetAssisit
             ///////////////////////////////////
             udpserver?.abordthread();
             udpserver?.msocket.Close();
+            /////////////
+            mclient?.abordthread();
+            mclient?.msocket.Close();
+            ///////////
+            udpreive?.abordthread();
+            udpreive?.msocket.Close();
         }
     }
 }
