@@ -19,7 +19,7 @@ namespace NetAssisit
         TcpListener myListener;
         TcpSocketClient currenttcpsocket;
         TcpSocketClient mclient;
-
+        Thread tcpaccecptthread;
         UdpServer udpserver;
         Socket mclient_udp;
         IPEndPoint remoteEndPoint;
@@ -77,8 +77,8 @@ namespace NetAssisit
                 ///* Start Listeneting at the specified port */
                 SynchronizationContext contex = SynchronizationContext.Current;
                 myListener.Start();
-                Thread thread = new Thread(Accept);
-                thread.Start(contex);
+                tcpaccecptthread = new Thread(Accept);
+                tcpaccecptthread.Start(contex);
             }
             catch (Exception ex)
             {
@@ -104,6 +104,7 @@ namespace NetAssisit
                 {
 
                 }
+                Thread.Sleep(200);
             }
         }
 
@@ -245,7 +246,10 @@ namespace NetAssisit
 
         private void NetAssist_FormClosed(object sender, FormClosedEventArgs e)
         {
-            myListener?.Stop();
+            
+            myListener?.Stop();//stop tcplistener first and then abort receive thread
+            tcpaccecptthread?.Abort();//abort receive thread
+
             currenttcpsocket?.abordthread();
             currenttcpsocket?.msocket.Close();
             ///////////////////////////////////
