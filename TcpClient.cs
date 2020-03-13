@@ -28,7 +28,13 @@ namespace NetAssisit
         }
         public void Send(byte[] bytearray)
         {
-            msocket.Send(bytearray);
+            try
+            {
+                msocket.Send(bytearray);
+            } catch (Exception E)
+            { 
+            
+            }
         }
         void ReceiveLoop(object state)
         {
