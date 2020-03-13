@@ -38,8 +38,7 @@ namespace NetAssisit
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (mclient!=null&& mclient.msocket.Connected)
-            {
+
                 if (checkBox1.Checked)
                 {
                     UnicodeEncoding asen = new UnicodeEncoding();
@@ -52,7 +51,6 @@ namespace NetAssisit
 
                     currenttcpsocket?.Send(asen.GetBytes(textBox2.Text));
                 }
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)//tcpserverlisten
