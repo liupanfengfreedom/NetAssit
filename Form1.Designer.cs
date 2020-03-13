@@ -297,7 +297,7 @@
             this.Controls.Add(this.textBox1);
             this.MaximizeBox = false;
             this.Name = "NetAssist";
-            this.Text = "Form1";
+            this.Text = "NetAssist";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NetAssist_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
